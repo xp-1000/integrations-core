@@ -76,9 +76,9 @@ class CheckSSH(AgentCheck):
         if conf.private_key_file is not None:
             try:
                 if conf.private_key_type == 'ecdsa':
-                    private_key = paramiko.ECDSAKey.from_private_key_file(conf.private_key_file)
+                    private_key = paramiko.ECDSAKey.from_private_key_file(conf.private_key_file, password=conf.password)
                 else:
-                    private_key = paramiko.RSAKey.from_private_key_file(conf.private_key_file)
+                    private_key = paramiko.RSAKey.from_private_key_file(conf.private_key_file, password=conf.password)
             except IOError:
                 self.warning("Unable to find private key file: %s", conf.private_key_file)
             except paramiko.ssh_exception.PasswordRequiredException:
